@@ -3,7 +3,8 @@ def gerar_receita_linha(linha):
     cor_atual = linha[0]
     contador = 1
     
-    for i in range(1,len(linha)):
+    for i in range(1, len(linha)):
+        
         if linha[i]== cor_atual:
             contador+=1
 
