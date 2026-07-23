@@ -2,7 +2,7 @@ from PIL import Image
 
 PALETA = {
     "verde": (163, 208, 201),
-    "branco": (255,255,255)
+    "branco": (216, 230, 225)
 }
 
 
@@ -38,14 +38,18 @@ def identificar_cor(rgb):
     cor_escolhida = ""
 
     for nome, valor in PALETA.items():
-        print(nome, valor)
+
+        distancia = (
+            abs(rgb[0] - valor[0]) +
+            abs(rgb[1] - valor[1]) +
+            abs(rgb[2] - valor[2])
+        )
 
         if distancia < menor_distancia:
             menor_distancia = distancia
-
             cor_escolhida = nome
 
-            return cor_escolhida
+    return cor_escolhida
 
 
     if rgb == PALETA["verde"]:
