@@ -16,3 +16,4 @@ def gerar_receita_linha(linha):
     receita.append(str(contador) +"x "+ cor_atual)
     #técnica run-length Encoding-RLE
     return ", ".join(receita)
+
