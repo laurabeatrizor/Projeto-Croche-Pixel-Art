@@ -17,3 +17,13 @@ def gerar_receita_linha(linha):
     #técnica run-length Encoding-RLE
     return ", ".join(receita)
 
+def gerar_receita_imagem(matriz):
+
+    carreira = 1
+
+    for i in range(len(matriz) -1, -1, -1):
+        receita = gerar_receita_linha(matriz[i])
+
+        print("Carreira", carreira, ":", receita)
+        
+        carreira +=1

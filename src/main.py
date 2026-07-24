@@ -6,6 +6,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 from algoritmo import gerar_receita_linha
 from imagem import ler_imagem, imagem_para_matriz
+from algoritmo import gerar_receita_linha, gerar_receita_imagem
 
 
 imagem = ler_imagem("imagens/testes/imagem 3x3.png")
@@ -21,7 +22,7 @@ print("Altura:", imagem.height)
 
 matriz = imagem_para_matriz(imagem)
 
-print(matriz)
+gerar_receita_imagem(matriz)
 
 
 """imagem = [
