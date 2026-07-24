@@ -5,13 +5,15 @@ PALETA = {
     "branco": (216, 230, 225)
 }
 
-
+"""Lê uma imagem utilizando a biblioteca Pillow"""
 
 def ler_imagem(caminho):
 
     imagem = Image.open(caminho)
 
     return imagem
+
+"""Converte a imagem em uma matriz contendo o nome da cor de cada pixel."""
 
 def imagem_para_matriz(imagem):
     matriz = []
@@ -32,7 +34,7 @@ def imagem_para_matriz(imagem):
     return matriz
 
 
-
+"""Identifica a cor mais próxima do pixel comparando com a paleta."""
 def identificar_cor(rgb):
     menor_distancia = 999999
     cor_escolhida = ""
@@ -51,11 +53,5 @@ def identificar_cor(rgb):
 
     return cor_escolhida
 
-
-    if rgb == PALETA["verde"]:
-        return "verde"
-
-    else:
-        return "branco"
 
     
