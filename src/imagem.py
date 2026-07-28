@@ -1,9 +1,5 @@
 from PIL import Image
 
-PALETA = {
-    "verde": (163, 208, 201),
-    "branco": (216, 230, 225)
-}
 
 """Lê uma imagem utilizando a biblioteca Pillow"""
 
@@ -15,43 +11,48 @@ def ler_imagem(caminho):
 
 """Converte a imagem em uma matriz contendo o nome da cor de cada pixel."""
 
-def imagem_para_matriz(imagem):
+def imagem_para_matriz(imagem, linhas, colunas):
+    largura_celula = imagem.width / colunas
+    altura_celula = imagem.height / linhas
+    print("Largura da célula:", largura_celula)
+    print("Altura da célula:", altura_celula)
+
     matriz = []
-    for y in range(imagem.height):
+
+    for y in range(linhas):
 
         linha = []
 
-        for x in range(imagem.width):
+        for x in range(colunas):
 
-            rgb = imagem.getpixel((x, y))
+            print("Linha:", y, "Coluna:", x)
 
-            cor = identificar_cor(rgb)
+            #rgb = imagem.getpixel((x, y))
 
-            linha.append(cor)
+            #cor = identificar_cor(rgb)
+
+            #linha.append(cor)
 
         matriz.append(linha)
 
     return matriz
 
+def calcular_distancia(rgb1, rgb2):
 
-"""Identifica a cor mais próxima do pixel comparando com a paleta."""
-def identificar_cor(rgb):
-    menor_distancia = 999999
-    cor_escolhida = ""
+    distancia = (
+        abs(rgb1[0] - rgb2[0]) +
+        abs(rgb1[1] - rgb2[1]) +
+        abs(rgb1[2] - rgb2[2])
+    )
 
-    for nome, valor in PALETA.items():
+    return distancia
 
-        distancia = (
-            abs(rgb[0] - valor[0]) +
-            abs(rgb[1] - valor[1]) +
-            abs(rgb[2] - valor[2])
-        )
 
-        if distancia < menor_distancia:
-            menor_distancia = distancia
-            cor_escolhida = nome
 
-    return cor_escolhida
+
+        
+
+
 
 
     
