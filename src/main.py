@@ -2,7 +2,6 @@ import sys
 import io
 
 
-
 # Força o terminal a usar UTF-8 para exibir os textos corretamente
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
@@ -17,7 +16,7 @@ from processamento import (
 )
 
 # Lê a imagem
-imagem = ler_imagem("imagens/testes/11x11.png")
+imagem = ler_imagem("imagens/testes/4x4.png")
 
 # Usuário escolhe o tamanho da receita
 linhas = int(input("Digite a quantidade de linhas: "))

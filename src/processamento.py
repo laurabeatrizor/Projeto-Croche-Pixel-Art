@@ -1,8 +1,9 @@
 import cv2
 import numpy as np
 from sklearn.cluster import KMeans
-from collections import Counter
 
+
+#Módulo responsável pelo processamento da imagem.
 PALETA = {
     "branco": np.array([255, 255, 255]),
     "preto": np.array([0, 0, 0]),
@@ -14,6 +15,9 @@ PALETA = {
 
 def ler_imagem(caminho):
 
+    #Lê a imagem utilizando OpenCV e converte do padrão BGR para RGB.
+    
+
     imagem = cv2.imread(caminho)
     imagem = cv2.cvtColor(imagem, cv2.COLOR_BGR2RGB)
 
@@ -21,9 +25,13 @@ def ler_imagem(caminho):
 
 def preparar_pixels(imagem):
 
+    #Converte a imagem em uma lista de pixels para utilização no algoritmo K-Means.
+
     return imagem.reshape((-1,3))
 
 def quantizar_cores(pixels, quantidade_cores):
+
+    #Aplica o algoritmo K-Means para reduzir a quantidade de cores da imagem.
 
     kmeans = KMeans(
         n_clusters=quantidade_cores,
@@ -37,6 +45,8 @@ def quantizar_cores(pixels, quantidade_cores):
 
 def reconstruir_imagem(kmeans, imagem):
 
+    #Reconstrói a imagem utilizando apenas as cores encontradas pelo K-Means.
+
     pixels = preparar_pixels(imagem)
 
     novos_pixels = kmeans.cluster_centers_[kmeans.labels_]
@@ -46,10 +56,14 @@ def reconstruir_imagem(kmeans, imagem):
 
 def gerar_matriz(imagem, linhas, colunas, centros):
 
+    """Divide a imagem em uma grade conforme as
+    dimensões informadas pelo usuário e identifica
+    a cor predominante de cada célula."""
+
     altura, largura, _ = imagem.shape
 
-    altura_celula = altura // linhas
-    largura_celula = largura // colunas
+    altura_celula = altura / linhas
+    largura_celula = largura / colunas
 
     matriz = []
 
@@ -59,46 +73,32 @@ def gerar_matriz(imagem, linhas, colunas, centros):
 
         for j in range(colunas):
 
-            y1 = i * altura_celula
-            y2 = (i + 1) * altura_celula
+            # Centro da célula
+            y = int((i + 0.5) * altura_celula)
+            x = int((j + 0.5) * largura_celula)
 
-            x1 = j * largura_celula
-            x2 = (j + 1) * largura_celula
+            pixel = imagem[y, x]
 
-            celula = imagem[y1:y2, x1:x2]
+            menor_distancia = float("inf")
+            indice = 0
 
-            # Ignora aproximadamente 20% da borda
-            margem_y = celula.shape[0] // 5
-            margem_x = celula.shape[1] // 5
+            for k in range(len(centros)):
 
-            centro = celula[
-                margem_y:celula.shape[0]-margem_y,
-                margem_x:celula.shape[1]-margem_x
-            ]
+                distancia = np.linalg.norm(pixel - centros[k])
 
-            votos = []
+                if distancia < menor_distancia:
+                    menor_distancia = distancia
+                    indice = k
 
-            for linha_centro in centro:
-                for pixel in linha_centro:
-
-                    distancias = []
-
-                    for c in centros:
-                        distancias.append(np.linalg.norm(pixel-c))
-
-                    indice = np.argmin(distancias)
-
-                    votos.append(indice)
-
-            indice_vencedor = Counter(votos).most_common(1)[0][0]
-
-            linha.append(indice_vencedor)
+            linha.append(indice)
 
         matriz.append(linha)
 
     return matriz
 
 def nomear_cores(matriz, centros):
+
+    #Associa cada centro encontrado pelo K-Means a uma cor conhecida da paleta.
 
     mapa = {}
 

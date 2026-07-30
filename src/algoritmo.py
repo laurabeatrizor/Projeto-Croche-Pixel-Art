@@ -1,7 +1,10 @@
-"""Recebe uma linha da matriz de cores e gera a receita utilizando
-    a técnica Run-Length Encoding (RLE)"""
+"""
+Módulo responsável por gerar a receita de crochê a partir
+da matriz de cores utilizando a técnica Run-Length Encoding (RLE).
+"""
 
 def gerar_receita_linha(linha):
+    #Recebe uma linha da matriz de cores e gera a receita
     receita = []
     cor_atual = linha[0]
     contador = 1
