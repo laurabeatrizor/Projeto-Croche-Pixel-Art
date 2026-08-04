@@ -7,11 +7,13 @@ from sklearn.cluster import KMeans
 PALETA = {
     "branco": np.array([255, 255, 255]),
     "preto": np.array([0, 0, 0]),
-    "vermelho": np.array([255, 0, 0]),
-    "azul": np.array([0, 0, 255]),
-    "amarelo": np.array([255, 255, 0])
+    "vermelho": np.array([180, 40, 40]),
+    "laranja": np.array([255, 150, 20]),
+    "amarelo": np.array([255, 230, 0]),
+    "verde": np.array([60, 130, 40]),
+    "azul": np.array([30, 80, 220]),
+    "marrom": np.array([105, 70, 35])
 }
-
 
 def ler_imagem(caminho):
 
