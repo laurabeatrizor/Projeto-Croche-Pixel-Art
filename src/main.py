@@ -1,12 +1,13 @@
 import sys
 import io
 import numpy as np
-
+from avaliacao import calcular_ssim
+from algoritmo import gerar_receita_imagem
 
 # Força o terminal a usar UTF-8 para exibir os textos corretamente
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
-from algoritmo import gerar_receita_imagem
+
 from processamento import (
     ler_imagem,
     preparar_pixels,
@@ -38,6 +39,8 @@ kmeans = quantizar_cores(
 
 imagem_quantizada = reconstruir_imagem(kmeans, imagem)
 
+indice_ssim = calcular_ssim(imagem,imagem_quantizada)
+
 matriz = gerar_matriz(
     imagem_quantizada,
     linhas,
@@ -47,12 +50,15 @@ matriz = gerar_matriz(
 
 matriz = nomear_cores(matriz, kmeans.cluster_centers_)
 
-print("Centros encontrados:")
+"""print("Centros encontrados:")
 for centro in kmeans.cluster_centers_:
-    print(centro)
+    print(centro)"""
 
 # Gera a receita
 gerar_receita_imagem(matriz)
+
+print()
+print(f"Índice SSIM: {indice_ssim:.4f}")
 
 
 
